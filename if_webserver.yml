@@ -1,0 +1,11 @@
+---
+- name: 배포판 별로 웹 서버 설치
+  hosts: all
+  become: true
+  vars:
+    dist_name: "{{ 'amazon' if ansible_distribution == 'Amazon'
+                    else 'ubuntu' if ansible_distribution == 'Ubuntu' }}"
+
+  tasks:
+    - name: 각 서버에서의 작업
+      include_tasks: "{{ dist_name }}.yml"
